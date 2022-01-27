@@ -11,7 +11,7 @@ export class RestaurantsComponent implements OnInit {
   constructor(
     public restaurantService: RestaurantService
   ) {
-    this.restaurantService.get("http://127.0.0.1:8000/api/getData").subscribe((res: any)=> {
+    this.restaurantService.get("https://api-test-oasis.herokuapp.com/api/getData").subscribe((res: any)=> {
         this.algo= res;
         console.log(res);
       });
