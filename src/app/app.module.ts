@@ -8,6 +8,7 @@ import { RestaurantsComponent } from './components/restaurants/restaurants.compo
 import { DetailsComponent } from './components/details/details.component';
 import { ListComponent } from './components/list/list.component';
 import { ListItemComponent } from './components/list-item/list-item.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { ListItemComponent } from './components/list-item/list-item.component';
     RouterModule.forRoot([
       //{ path: '',   redirectTo: 'formulario', pathMatch: 'full' },
       { path: '', component: RestaurantsComponent},
-    ])
+    ]),
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent]

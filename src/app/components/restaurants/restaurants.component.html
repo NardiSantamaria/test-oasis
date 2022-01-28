@@ -1,4 +1,3 @@
-<p>restaurants works!</p>
 <style>
   :host {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
@@ -15,7 +14,7 @@
   h4,
   h5,
   h6 {
-    margin: 8px 0;
+    margin-bottom: 0;
   }
 
   p {
@@ -25,7 +24,6 @@
   .spacer {
     flex: 1;
   }
-
   .toolbar {
     position: absolute;
     top: 0;
@@ -38,12 +36,9 @@
     color: white;
     font-weight: 600;
   }
-
   .toolbar img {
     margin: 0 16px;
   }
-
-
   .container {
     display: flex;
     flex-direction: row;
@@ -51,21 +46,21 @@
     top: 60px;
     position: absolute;
     height: 100%;
-    width: 100%;
+    min-width: 100%;
   }
   .column{
       flex-grow: 1;
       min-height: 100%;
+      margin: auto;
+      
   }
-
   .card svg.material-icons path {
     fill: #888;
   }
-
   .card-container {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    /* justify-content: center; */
     margin-top: 16px;
   }
 
@@ -99,7 +94,7 @@
   }
 
   .card-container .card:not(.highlight-card):hover {
-    transform: translateY(-3px);
+    
     box-shadow: 0 4px 17px rgba(0, 0, 0, 0.35);
   }
 
@@ -160,7 +155,7 @@
   }
 
   /* Responsive Styles */
-  @media screen and (max-width: 767px) {
+  @media screen  {
 
     .card-container > *:not(.circle-link) ,
     .terminal {
@@ -182,7 +177,10 @@
     }
 
   }
-
+    img{
+      height: 220px;
+      max-width: 400px;
+    }
   @media screen and (max-width: 575px) {
     svg#rocket-smoke {
       display: none;
@@ -192,20 +190,98 @@
 </style>
 
 <!-- Toolbar -->
-<div class="toolbar" role="banner">
-    <span>&nbsp; GRAND OASIS CANCUN | &nbsp; </span>
-    <span>{{today | date:'hh:mm a'}}</span>
-    <p>&nbsp;{{today | date }}</p>
-    <!-- <h3 id="HoraActual"> hora </h3> -->
-    <!-- <div class="spacer"></div> -->
-    
-    
-</div>
 
+
+<div class="toolbar" role="banner">
+  <span>&nbsp; GRAND OASIS CANCUN | &nbsp; </span>
+  <span>{{today | date:'hh:mm a'}}</span>
+  <p>&nbsp;{{today | date }}</p>
+  <!-- <h3 id="HoraActual"> hora </h3> -->
+  <!-- <div class="spacer"></div> -->
+</div>
 <div class="container" role="main">
-    <div class="column" style="background-color: #ffffff;">bebé</div>
-    <div class="column" style="background-color: #464646;">o</div>
-    <div class="column" style="background-color: #ffffff;">a</div>
+    <div class="column" style="background-color: #ffffff;">
+      <div class="table" *ngIf="items.restaurantes">
+        <div *ngFor="let i of items.restaurantes">
+            <h6 style="margin-top: 15px;">{{ i.nombre }}</h6>
+            <p style="color: red">{{ i.concepto_es }}</p> <br>
+            <div class="row" style="margin-right: 15px;">
+              <div class="col">
+                <p style="color: black; font-weight: bold;">ABIERTO HOY</p>
+                <div *ngFor="let j of items.horarios">
+                  <span style="color: black;" *ngIf="j.centro_consumo_id == i.centro_consumo_id && j.dia == dia">
+                     {{j.hora_inicio}} - {{ j.hora_final }}
+                  </span> 
+                </div>
+              </div>
+              <div>
+                <button type="button" class="btn btn-outline-dark" (click)="clickbutton(i.centro_consumo_id)">VER MÁS</button>
+              </div>
+            </div>
+            <hr style="margin-right: 15px; background-color:black">
+        </div>
+      </div>
+    </div>
+
+    <div class="column" style="background-color: #464646; padding-left: 15px;">
+      <div class="table" *ngIf="items.bares">
+        <div *ngFor="let i of items.bares">
+          <h6 style="color:white; margin-top: 15px;">{{ i.nombre }}</h6>
+          <br>
+          <div class="row" style="margin-right: 15px;">
+            <div class="col">
+              <p style="color: white; font-weight: bold;">ABIERTO HOY</p>
+              <div *ngFor="let j of items.horarios">
+                <span style="color: white;" *ngIf="j.centro_consumo_id == i.centro_consumo_id && j.dia == dia">
+                   {{j.hora_inicio}} - {{ j.hora_final }}
+                </span> 
+              </div>
+            </div>
+            <div>
+              <button type="button" class="btn btn-outline-light" (click)="clickbutton(i.centro_consumo_id)">VER MÁS</button>
+            </div>
+          </div>
+          <hr style="margin-right: 15px; background-color: white;">
+        </div>
+      </div>
+    </div>
+    
+    <div id="detalles" class="column" style="background-color: white; ">
+      <div align="middle" *ngIf="horario">
+        <h5 style="color:#ad0e02; margin: 15px;"> {{horario.centrosConsumo.nombre}} </h5> 
+        <img src='https://api-onow.oasishoteles.net/{{horario.centrosConsumo.img_portada}}' alt="">
+        <div class="row" style="margin-top: 40px;">
+          <div class="col" style="border-right: 1px solid gray;">
+              <h6 style="color: black; font-weight: bold;" > {{horario.centrosConsumo.nombre}} </h6>
+              <p> {{horario.centrosConsumo.concepto_es}} </p> <br>
+          </div>
+          <div class="col">
+            <div *ngIf="items.horarios">
+              <p style="color: black; font-weight: bold;" >ABIERTO</p>
+              <div *ngFor="let i of items.horarios">
+
+                <p style="color: black;" *ngIf="i.centro_consumo_id == aux_id">
+                  <span style="color: black;" *ngIf="i.dia==1">Lunes</span>
+                  <span style="color: black;" *ngIf="i.dia==2">Martes</span>
+                  <span style="color: black;" *ngIf="i.dia==3">Miercoles</span>
+                  <span style="color: black;" *ngIf="i.dia==4">Jueves</span>
+                  <span style="color: black;" *ngIf="i.dia==5">Viernes</span>
+                  <span style="color: black;" *ngIf="i.dia==6">Sabado</span>
+                  <span style="color: black;" *ngIf="i.dia==0">Domingo</span>
+                   {{i.hora_inicio}} - {{ i.hora_final }}
+                </p> 
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- <div *ngIf="items">
+        <div *ngFor="let i of items.detalles">
+          <h6>{{ i.nombre }}</h6>
+          <img class="categorie" src='https://api-onow.oasishoteles.net/{{i.img_portada}}' height="80" alt="">
+        </div>
+      </div> -->
+    </div>
   <!-- <h2>Resources</h2>
   <p>Here are some links to help you get started:</p>
 
