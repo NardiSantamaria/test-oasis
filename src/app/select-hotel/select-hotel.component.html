@@ -1,0 +1,9 @@
+<p>select-hotel works!</p>
+
+<label for="cars">Selecciona un hotel:</label>
+
+<select name="" id="" (change)="selecthotel($event)">
+  <option value="0">Todos</option>
+  <option *ngFor="let i of hotels.hoteles" value="{{i.id}}">{{i.nombre}}</option>
+  
+</select>

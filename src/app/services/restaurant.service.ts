@@ -12,7 +12,7 @@ export class RestaurantService {
   User(url:any, body: any){
      return this.http.post(url, body);
   }
-  get(url:any){
-    return this.http.get(url);
+  get(url:any, opts?:any){
+    return this.http.get(url, opts);
   }
 }

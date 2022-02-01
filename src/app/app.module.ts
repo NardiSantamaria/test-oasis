@@ -9,6 +9,8 @@ import { DetailsComponent } from './components/details/details.component';
 import { ListComponent } from './components/list/list.component';
 import { ListItemComponent } from './components/list-item/list-item.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { SelectComponent } from './select/select.component';
+import { SelectHotelComponent } from './select-hotel/select-hotel.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +18,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     RestaurantsComponent,
     DetailsComponent,
     ListComponent,
-    ListItemComponent
+    ListItemComponent,
+    SelectComponent,
+    SelectHotelComponent
   ],
   imports: [
     HttpClientModule,

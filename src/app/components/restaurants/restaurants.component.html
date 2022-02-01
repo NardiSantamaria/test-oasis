@@ -200,6 +200,7 @@
   <!-- <div class="spacer"></div> -->
 </div>
 <div class="container" role="main">
+  <div class="row"><app-select-hotel [callback]="myCallbackFunction"></app-select-hotel></div>
     <div class="column" style="background-color: #ffffff;">
       <div class="table" *ngIf="items.restaurantes">
         <div *ngFor="let i of items.restaurantes">
